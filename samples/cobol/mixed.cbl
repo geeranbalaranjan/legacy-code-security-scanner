@@ -1,0 +1,12 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. MIXED.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-PGM-VAR PIC X(08) VALUE "PAYLOAD".
+      *> PASSWORD "ignore-this-comment"
+       PROCEDURE DIVISION.
+           EXEC CICS LINK PROGRAM(WS-PGM-VAR)
+                CHANNEL(WS-CHANNEL)
+           END-EXEC.
+           CALL WS-PGM-VAR USING CUSTOMER-REC.
+           GOBACK.
