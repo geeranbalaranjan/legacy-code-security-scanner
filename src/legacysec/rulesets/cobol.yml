@@ -1,0 +1,95 @@
+{
+  "rules": [
+    {
+      "id": "COBOL-001",
+      "title": "EXEC CICS LINK without input validation",
+      "severity": "high",
+      "description": "Detects CICS LINK usage with shared input structures that should be validated before transfer.",
+      "cwe": "CWE-20",
+      "patterns": [
+        "EXEC\\s+CICS\\s+LINK"
+      ],
+      "any_of": [
+        "\\bCOMMAREA\\b",
+        "\\bCHANNEL\\b"
+      ],
+      "languages": [
+        "cobol"
+      ],
+      "remediation": "Validate and constrain COMMAREA or CHANNEL input before invoking linked programs.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/20.html"
+      ]
+    },
+    {
+      "id": "COBOL-002",
+      "title": "Hardcoded credentials/secrets",
+      "severity": "high",
+      "description": "Detects likely embedded secrets committed directly in source.",
+      "cwe": "CWE-798",
+      "patterns": [
+        "(?i)\\b(PASSWORD|PASSWD|API[-_ ]?KEY|SECRET)\\b.*['\"][^'\"]+['\"]"
+      ],
+      "languages": [
+        "cobol"
+      ],
+      "remediation": "Move secrets to protected runtime configuration and rotate any exposed values.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/798.html"
+      ]
+    },
+    {
+      "id": "COBOL-003",
+      "title": "Dynamic program call",
+      "severity": "medium",
+      "description": "Detects dynamic or variable-driven program invocation that can bypass strict control flow assumptions.",
+      "cwe": "CWE-94",
+      "patterns": [
+        "CALL\\s+(\\w+-)?VAR",
+        "CALL\\s+.*\\s+USING\\s+.*"
+      ],
+      "languages": [
+        "cobol"
+      ],
+      "remediation": "Restrict dynamic call targets to an allowlist and validate calling parameters.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/94.html"
+      ]
+    },
+    {
+      "id": "COBOL-004",
+      "title": "Weak/obsolete crypto mention",
+      "severity": "medium",
+      "description": "Detects references to cryptographic algorithms commonly considered obsolete or weak.",
+      "cwe": "CWE-327",
+      "patterns": [
+        "(?i)\\b(MD5|SHA1|DES|RC4)\\b"
+      ],
+      "languages": [
+        "cobol"
+      ],
+      "remediation": "Replace obsolete algorithms with modern approved cryptographic primitives.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/327.html"
+      ]
+    },
+    {
+      "id": "COBOL-005",
+      "title": "OS command execution / shell out",
+      "severity": "high",
+      "description": "Detects operating system command execution that can expose command injection paths.",
+      "cwe": "CWE-78",
+      "patterns": [
+        "CALL\\s+['\"]SYSTEM['\"]",
+        "EXEC\\s+SQL\\s+CALL\\s+['\"]?SYSTEM['\"]?"
+      ],
+      "languages": [
+        "cobol"
+      ],
+      "remediation": "Avoid shell invocation where possible, or strictly validate and constrain command input.",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/78.html"
+      ]
+    }
+  ]
+}
